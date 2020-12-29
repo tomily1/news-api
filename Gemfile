@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -23,7 +25,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 group :development, :test do
-  gem 'pry-byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 4.0.1'
 end
 
@@ -40,4 +42,4 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
