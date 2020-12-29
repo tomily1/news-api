@@ -85,5 +85,28 @@ describe AuthenticationController, type: :controller do
         expect(response.status).to eq 401
       end
     end
+
+    context 'invalid signature' do
+      before do
+        @request.headers['Authorization'] = 'Bearer test.qwerty'
+        post :logout
+      end
+
+      it 'should respond with 401' do
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'verification error' do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:authorize_request).and_raise(JWT::VerificationError)
+        @request.headers['Authorization'] = 'Bearer test.qwerty'
+        post :logout
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq 422
+      end
+    end
   end
 end
