@@ -1,0 +1,21 @@
+language: ruby
+bundler_args: '--without development exclude_travis'
+cache:
+  bundler: true
+dist: trusty
+rvm:
+  - 2.7.1
+matrix:
+  fast_finish: true
+install:
+  - bundle install
+script:
+  - bundle exec rspec
+addons:
+  postgresql: '9.5'
+services:
+  - postgresql
+before_script:
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+sudo: false
