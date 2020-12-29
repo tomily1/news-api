@@ -27,6 +27,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
 end
 
+group :test do
+  gem 'simplecov', '~> 0.19'
+  gem 'codecov'
+end
+
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
