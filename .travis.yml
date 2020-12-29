@@ -9,6 +9,7 @@ matrix:
   fast_finish: true
 install:
   - bundle install
+  - cp -v .env.example .env
 script:
   - bundle exec brakeman -z
   - bundle exec rubocop -c .rubocop.yml --fail-level C

@@ -10,8 +10,8 @@ class ApplicationController < ActionController::API
 
     return unauthorized if TokenBlacklist.exists_for?(token)
 
-    @decoded = JsonWebToken.decode(token)
-    @current_user = User.find_by_id(@decoded[:sub])
+    decoded = JsonWebToken.decode(token)
+    User.find_by_id(decoded[:sub])
   rescue ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::ExpiredSignature => e
     render json: { errors: e.message }, status: :unauthorized
   end
