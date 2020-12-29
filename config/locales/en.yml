@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  activemodel:
+    validators:
+      email_format:
+        not_valid: is not a valid email address
+  error:
+    not_found: "An error has occured: Record Not Found"
+    unprocessable_entity: "An error has occured: Unprocessable entity"
+    standard_error: "An error has occured and we are looking into it"
