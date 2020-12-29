@@ -57,4 +57,33 @@ describe AuthenticationController, type: :controller do
       end
     end
   end
+
+  describe 'POST /logout' do
+    context '200' do
+      before do
+        access_token = JsonWebToken.encode(sub: user.id)
+        @request.headers['Authorization'] = "Bearer #{access_token}"
+        post :logout
+      end
+
+      it 'should respond with 200 for new token' do
+        body = JSON.parse(response.body)
+        expect(response.status).to eq 200
+        expect(body['message']).to eq('logged out')
+      end
+    end
+
+    context '401' do
+      before do
+        access_token = JsonWebToken.encode(sub: user.id)
+        TokenBlacklist.create(jwt_token: access_token, expiration_date: 1.hour.from_now)
+        @request.headers['Authorization'] = "Bearer #{access_token}"
+        post :logout
+      end
+
+      it 'should respond with 401 for already blacklisted token' do
+        expect(response.status).to eq 401
+      end
+    end
+  end
 end

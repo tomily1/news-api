@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
   def authorize_request
     return unauthorized('No authentication token provided') unless header =~ AUTH_FORMAT
 
-    return unauthorized if TokenBlacklist.exists_for?(token)
+    return unauthorized if TokenBlacklist.exists?(jwt_token: token)
 
     decoded = JsonWebToken.decode(token)
     User.find_by_id(decoded[:sub])
