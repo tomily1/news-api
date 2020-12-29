@@ -1,4 +1,3 @@
-  
 # frozen_string_literal: true
 
 require 'rails_helper'
@@ -46,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with email already in use' do
       before do
-        post :create, params: { email: user.email , password: user.password }
+        post :create, params: { email: user.email, password: user.password }
       end
 
       it 'returns a 422 response' do

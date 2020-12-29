@@ -19,10 +19,4 @@ class JsonWebToken
     decoded = JWT.decode(token, SECRET_KEY, true, algorithm: ALGORITHM)[0]
     HashWithIndifferentAccess.new decoded
   end
-
-  def self.valid?(token)
-    decoded = JsonWebToken.decode(token)
-    time_elapsed = (Time.current - Time.zone.at(decoded['iat'].to_i)) / 60
-    time_elapsed.positive?
-  end
 end
