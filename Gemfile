@@ -28,8 +28,10 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov', '~> 0.19'
+  gem 'brakeman'
   gem 'codecov'
+  gem 'rubocop', '~> 0.74'
+  gem 'simplecov', '~> 0.19'
 end
 
 group :development do
