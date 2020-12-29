@@ -10,6 +10,8 @@ matrix:
 install:
   - bundle install
 script:
+  - bundle exec brakeman -z
+  - bundle exec rubocop -c .rubocop.yml --fail-level C
   - bundle exec rspec
 addons:
   postgresql: '9.5'
