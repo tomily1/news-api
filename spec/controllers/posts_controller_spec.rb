@@ -7,7 +7,10 @@ RSpec.describe PostsController, type: :controller do
   let(:admin_user) { create(:admin_user) }
   let!(:post) { create(:post) }
   let(:access_token) { JsonWebToken.encode(sub: user.id) }
-  let(:admin_access_token) { JsonWebToken.encode(sub: admin_user.id) }
+  let(:admin_access_token) do
+    admin_user.generate_token
+    JsonWebToken.encode(sub: admin_user.token)
+  end
 
   before do
     10.times { create(:post) }

@@ -7,8 +7,13 @@ RSpec.describe Admin::AuthenticationsController, type: :controller do
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
 
-  def access_token(user)
-    JsonWebToken.encode(sub: user.id)
+  before do
+    admin_user.generate_token
+    super_admin_user.generate_token
+  end
+
+  def access_token(user, token = nil)
+    JsonWebToken.encode(sub: token || user.id)
   end
 
   describe 'POST #create' do
@@ -41,7 +46,7 @@ RSpec.describe Admin::AuthenticationsController, type: :controller do
         end
 
         before do
-          @request.headers['Authorization'] = "Bearer #{access_token(admin_user)}"
+          @request.headers['Authorization'] = "Bearer #{access_token(admin_user, admin_user.token)}"
           post :create, params: params
         end
 
@@ -53,7 +58,7 @@ RSpec.describe Admin::AuthenticationsController, type: :controller do
 
     context 'authorized super_admin user' do
       before do
-        @request.headers['Authorization'] = "Bearer #{access_token(super_admin_user)}"
+        @request.headers['Authorization'] = "Bearer #{access_token(super_admin_user, super_admin_user.token)}"
       end
 
       context 'with valid parameters' do

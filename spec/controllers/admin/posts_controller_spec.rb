@@ -4,7 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Admin::PostsController, type: :controller do
   let(:admin_user) { create(:admin_user) }
-  let(:access_token) { JsonWebToken.encode(sub: admin_user.id) }
+  let(:access_token) do
+    admin_user.generate_token
+    JsonWebToken.encode(sub: admin_user.token)
+  end
   let(:post_params) do
     {
       title: 'mock title',
