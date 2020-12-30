@@ -9,7 +9,7 @@ module Admin
 
       if post.valid?
         post.save
-        ok(post)
+        ok(post, :created)
       else
         unprocessable_entity(post.errors)
       end

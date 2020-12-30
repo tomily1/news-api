@@ -16,8 +16,8 @@ class ApplicationController < ActionController::API
     render json: { errors: e.message }, status: :unauthorized
   end
 
-  def ok(data = 'success')
-    render json: { data: data }, status: :ok
+  def ok(data = 'success', status = :ok)
+    render json: { data: data }, status: status
   end
 
   def not_found
