@@ -34,5 +34,143 @@ A simple API for a company’s internal news feed
 
 ### Endpoints
 
+#### User Login
+```
+Request: POST "/login"
+
+Parameters:
+  body: { email: 'test@camillion.app', password: 'password'}
+
+Response: 
+{
+    "access_token": "<JWT_LOGIN_TOKEN>",
+    "token_type": "Bearer",
+    "email": "test@camillion.app"
+}
+```
+
+#### Logout
+```
+Request: POST "/logout"
+
+Parameters: 
+  header: { 'Authorization': 'Bearer <JWT_LOGIN_TOKEN>'}
+  body: none
+
+Response: 
+{
+  "message": "logged out"
+}
+```
+
+#### Admin Logout
+
+```
+Request: POST "/admin/logout"
+
+Parameters: 
+  header: { 'Authorization': 'Bearer <JWT_LOGIN_TOKEN>'}
+  body: none
+
+Response: 
+{
+  "message": "logged out"
+}
+```
+
+### User signup
+```
+Request: POST "/user"
+
+Parameters: 
+  body: { "email": "t@test.co", "password": "password" }
+
+Response: 
+{
+  "data": { ...user_data }
+}
+```
+
+#### Fetch News Posts
+
+```
+Request: GET "/posts"
+
+Query params(optional): example: "/posts?page=2&per_page=1"
+per_page: number of news posts per page
+page: page number to fetch
+
+Parameters: 
+  header: { 'Authorization': 'Bearer <JWT_LOGIN_TOKEN>'}
+  body: none
+
+Response: 
+{
+  "data": [{}, {},{}....<news_posts>]
+}
+```
+
+#### Fetch a News Post
+
+```
+Request: GET "/posts/:id"
+
+Parameters: 
+  header: { 'Authorization': 'Bearer <JWT_LOGIN_TOKEN>'}
+
+Response: 
+{
+  "data": {<news_post>}
+}
+```
+
+#### Admin Login
+
+```
+Request: POST "/admin/authentication/login"
+
+Parameters:
+  body: { email: 'test@camillion.app', password: 'password'}
+
+Response: 
+{
+    "access_token": "<ADMIN_JWT_LOGIN_TOKEN>",
+    "token_type": "Bearer",
+    "email": "test@camillion.app"
+}
+```
+
+
+#### Create a new Admin (Super Admin Only)
+(Super Admin is automatically created when you run the seeds)
+
+```
+Request: POST "/admin/authentication"
+
+Parameters:
+  body: { email: 'test123@camillion.app', password: 'password'}
+
+Response: 
+{
+  "data": {"user_data"}
+}
+```
+
+#### Create a News Post (Admin Only)
+
+```
+Request: POST "/posts"
+
+Parameters: 
+  header: { 'Authorization': 'Bearer <ADMIN_JWT_LOGIN_TOKEN>'}
+  body: { "title": "title", "content": "content" }
+
+Response: 
+{
+  "data": {<news_post>}
+}
+```
+
+
 
 ### Future Improvements
