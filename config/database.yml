@@ -9,8 +9,3 @@ development:
 test:
   <<: *default
   database: news-api_test
-production:
-  <<: *default
-  database: news-api_production
-  username: news-api
-  password: <%= ENV['NEWS-API_DATABASE_PASSWORD'] %>

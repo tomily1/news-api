@@ -7,6 +7,7 @@ module HealthChecks
     def check
       [
         run_check('db.api.connection') do
+          ActiveRecord::Base.connection
           ActiveRecord::Base.connected?
         end
       ]
