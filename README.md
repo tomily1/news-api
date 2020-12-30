@@ -32,6 +32,9 @@ A simple API for a company’s internal news feed
 
 ### Live Demonstration
 
+
+This app is available and hosted on Heroku and it is available here https://camil-news-api.herokuapp.com/heartbeat.
+
 ### Endpoints
 
 #### User Login
@@ -171,6 +174,35 @@ Response:
 }
 ```
 
+#### Healthcheck
 
+
+```
+Request: GET "/healthcheck"
+
+Response: 
+{
+  "results": {<healthcheck result>}
+}
+```
+
+#### Heartbeat
+
+
+```
+Request: GET "/heartbeat"
+
+Response: 
+{
+  "status": "OK"
+}
+```
 
 ### Future Improvements
+
+This project covers the basic implementation and is written well enough to easily allow improvement and upgrades and also well tested with a good coverage. However, there are some improvements to be made. These changes include but not limited to:
+
+1. Allowing Normal users and admins to update password and edit account
+2. Allow admins (Super Admins and News owners/creators) to delete/archive news posts
+3. Allow admins to update news contents
+4. Improve the logic around the basic authentication for both users and admin
