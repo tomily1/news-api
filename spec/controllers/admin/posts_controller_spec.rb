@@ -13,7 +13,7 @@ RSpec.describe Admin::PostsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'unauthenticated user' do
+    context 'with unauthenticated user' do
       context 'with valid parameters' do
         before do
           post :create, params: post_params
@@ -25,7 +25,7 @@ RSpec.describe Admin::PostsController, type: :controller do
       end
     end
 
-    context 'authorized admin user' do
+    context 'with authorized admin user' do
       before do
         @request.headers['Authorization'] = "Bearer #{access_token}"
       end
