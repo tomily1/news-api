@@ -11,11 +11,15 @@ Rails.application.routes.draw do
 
   resource :user, only: :create
 
+  resources :posts, only: %i[index show]
+
   namespace :admin do
     resource :authentication, only: :create do
       member do
         post :login
       end
     end
+
+    resource :posts, only: :create
   end
 end
