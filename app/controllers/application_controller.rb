@@ -9,9 +9,8 @@ class ApplicationController < ActionController::API
     return unauthorized('No authentication token provided') unless header =~ AUTH_FORMAT
 
     return unauthorized if TokenBlacklist.exists?(jwt_token: token)
-
-    decoded = JsonWebToken.decode(token)
-    User.find_by_id(decoded[:sub])
+    
+    return unauthorized unless current_admin || current_user
   rescue ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::ExpiredSignature => e
     render json: { errors: e.message }, status: :unauthorized
   end
@@ -42,6 +41,16 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+  def current_user
+    decoded = JsonWebToken.decode(token)
+    @current_user ||= User.find_by_id(decoded[:sub])
+  end
+
+  def current_admin
+    decoded = JsonWebToken.decode(token)
+    @current_admin ||= AdminUser.find_by_id(decoded[:sub])
+  end
 
   def authenticate_user(klass, params)
     email = params[:email].try(:downcase)

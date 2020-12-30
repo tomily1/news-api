@@ -10,9 +10,4 @@ class AdminsController < ApplicationController
 
     return unauthorized unless current_admin
   end
-
-  def current_admin
-    decoded = JsonWebToken.decode(token)
-    @current_admin ||= AdminUser.find_by_id(decoded[:sub])
-  end
 end

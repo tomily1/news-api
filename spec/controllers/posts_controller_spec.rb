@@ -4,8 +4,10 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
   let(:user) { create(:user) }
+  let(:admin_user) { create(:admin_user) }
   let!(:post) { create(:post) }
   let(:access_token) { JsonWebToken.encode(sub: user.id) }
+  let(:admin_access_token) { JsonWebToken.encode(sub: admin_user.id) }
 
   before do
     10.times { create(:post) }
@@ -84,6 +86,35 @@ RSpec.describe PostsController, type: :controller do
       context 'not_found' do
         before do
           @request.headers['Authorization'] = "Bearer #{access_token}"
+          get :show, params: { id: '123abc' }
+        end
+
+        it 'returns a 404 response' do
+          expect(response.status).to eq(404)
+        end
+      end
+    end
+
+    context 'with authenticated admin_user' do
+      context 'found' do
+        before do
+          @request.headers['Authorization'] = "Bearer #{admin_access_token}"
+          get :show, params: { id: post.id }
+        end
+
+        it 'returns a 200 response' do
+          expect(response.status).to eq(200)
+        end
+
+        it 'returns the record' do
+          body = JSON.parse(response.body)
+          expect(body['data'].keys).to include('title', 'content')
+        end
+      end
+
+      context 'not_found' do
+        before do
+          @request.headers['Authorization'] = "Bearer #{admin_access_token}"
           get :show, params: { id: '123abc' }
         end
 
