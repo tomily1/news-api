@@ -49,25 +49,34 @@ class ApplicationController < ActionController::API
 
   def current_admin
     decoded = JsonWebToken.decode(token)
-    @current_admin ||= AdminUser.find_by_id(decoded[:sub])
+    @current_admin ||= AdminUser.where(token: decoded[:sub]).first
   end
 
-  def authenticate_user(klass, params)
+  def authenticate_user(klass, params, regenerate_token = false)
     email = params[:email].try(:downcase)
     user = klass.where('LOWER(email) = ?', email).first
 
     if user&.authenticate(params[:password])
-      token = JsonWebToken.encode(
-        sub: user.id
-      )
-
       render json: {
-        access_token: token,
+        access_token: fetch_token(user, regenerate_token),
         token_type: 'Bearer',
         email: user.email
       }, status: :ok
     else
       unauthorized
+    end
+  end
+
+  def fetch_token(user, regenerate_token)
+    if regenerate_token
+      user.generate_token
+      JsonWebToken.encode(
+        sub: user.token
+      )
+    else
+      JsonWebToken.encode(
+        sub: user.id
+      )
     end
   end
 

@@ -6,7 +6,7 @@ module Admin
     before_action :authorize_super_admin, only: :create
 
     def login
-      authenticate_user(AdminUser, params)
+      authenticate_user(AdminUser, params, true)
     end
 
     def create
