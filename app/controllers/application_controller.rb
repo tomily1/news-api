@@ -39,6 +39,35 @@ class ApplicationController < ActionController::API
 
   private
 
+  def authenticate_user(klass, params)
+    email = params[:email].try(:downcase)
+    user = klass.where('LOWER(email) = ?', email).first
+
+    if user&.authenticate(params[:password])
+      token = JsonWebToken.encode(
+        sub: user.id
+      )
+
+      render json: {
+        access_token: token,
+        token_type: 'Bearer',
+        email: user.email
+      }, status: :ok
+    else
+      unauthorized
+    end
+  end
+
+  def register_user(klass, params)
+    user = klass.new(params)
+    if user.valid?
+      user.save
+      ok(user)
+    else
+      unprocessable_entity(user.errors)
+    end
+  end
+
   def jwt_error
     unprocessable_entity('Invalid or Expired Token')
   end

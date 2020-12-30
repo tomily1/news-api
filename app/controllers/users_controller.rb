@@ -2,13 +2,7 @@
 
 class UsersController < ApplicationController
   def create
-    user = User.new(user_params)
-    if user.valid?
-      user.save
-      ok(user)
-    else
-      unprocessable_entity(user.errors)
-    end
+    register_user(User, user_params)
   end
 
   private
