@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_211504) do
+ActiveRecord::Schema.define(version: 2020_12_30_095302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_digest"
+    t.boolean "super_admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email"
+  end
 
   create_table "token_blacklists", force: :cascade do |t|
     t.string "jwt_token"
