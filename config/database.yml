@@ -9,6 +9,3 @@ development:
 test:
   <<: *default
   database: news-api_test
-production:
-  <<: *default
-  database: news-api_production
