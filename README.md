@@ -27,8 +27,9 @@ A simple API for a company’s internal news feed
 3. Run `bundle install` to install dependencies
 4. Run `cp -v .env.example .env` to copy over the environment variable
 5. Run `rails db:setup` to setup the database (N.B postgresql is used for database)
-5. run the app with `rails server`
-6. the app will be available on `localhost:3000`
+6. Run `rails db:seed` to load the database with sample data
+7. Run the app with `rails server`
+8. The app will be available on `localhost:3000`
 
 ### Live Demonstration
 
