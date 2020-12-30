@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
     return unauthorized('No authentication token provided') unless header =~ AUTH_FORMAT
 
     return unauthorized if TokenBlacklist.exists?(jwt_token: token)
-    
+
     return unauthorized unless current_admin || current_user
   rescue ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::ExpiredSignature => e
     render json: { errors: e.message }, status: :unauthorized
