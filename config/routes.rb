@@ -11,9 +11,11 @@ Rails.application.routes.draw do
 
   resource :user, only: :create
 
-  resource :admin, only: :create do
-    member do
-      post :login
+  namespace :admin do
+    resource :authentication, only: :create do
+      member do
+        post :login
+      end
     end
   end
 end
