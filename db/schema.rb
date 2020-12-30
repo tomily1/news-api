@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_12_30_112312) do
     t.index ["email"], name: "index_admin_users_on_email"
   end
 
-  create_table "news", force: :cascade do |t|
+  create_table "posts", force: :cascade do |t|
     t.text "title"
     t.text "content"
     t.datetime "created_at", null: false

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateNews < ActiveRecord::Migration[5.2]
+class CreatePosts < ActiveRecord::Migration[5.2]
   def change
-    create_table :news do |t|
+    create_table :posts do |t|
       t.text :title
       t.text :content
 

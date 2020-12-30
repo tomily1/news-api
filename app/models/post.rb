@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class News < ApplicationRecord
+class Post < ApplicationRecord
 end
