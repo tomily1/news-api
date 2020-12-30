@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post '/login', to: 'authentication#login'
   post '/logout', to: 'authentication#logout'
+  post 'admin/logout', to: 'authentication#logout'
 
   resource :user, only: :create
 
