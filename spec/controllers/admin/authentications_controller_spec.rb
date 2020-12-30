@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AdminsController, type: :controller do
+RSpec.describe Admin::AuthenticationsController, type: :controller do
   let(:super_admin_user) { create(:admin_user, :super_admin) }
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }

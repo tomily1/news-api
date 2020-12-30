@@ -10,14 +10,17 @@ class ApplicationController < ActionController::API
 
     return unauthorized if TokenBlacklist.exists?(jwt_token: token)
 
-    decoded = JsonWebToken.decode(token)
-    User.find_by_id(decoded[:sub])
+    return unauthorized unless current_admin || current_user
   rescue ActiveRecord::RecordNotFound, JWT::DecodeError, JWT::ExpiredSignature => e
     render json: { errors: e.message }, status: :unauthorized
   end
 
-  def ok(data = 'success')
-    render json: { data: data }, status: :ok
+  def ok(data = 'success', status = :ok)
+    render json: { data: data }, status: status
+  end
+
+  def not_found
+    render json: { error: 'not_found' }, status: :not_found
   end
 
   def unprocessable_entity(message = 'unprocessable_entity')
@@ -38,6 +41,16 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+  def current_user
+    decoded = JsonWebToken.decode(token)
+    @current_user ||= User.find_by_id(decoded[:sub])
+  end
+
+  def current_admin
+    decoded = JsonWebToken.decode(token)
+    @current_admin ||= AdminUser.find_by_id(decoded[:sub])
+  end
 
   def authenticate_user(klass, params)
     email = params[:email].try(:downcase)
