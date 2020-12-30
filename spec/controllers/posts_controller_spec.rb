@@ -115,7 +115,7 @@ RSpec.describe PostsController, type: :controller do
       context 'not_found' do
         before do
           @request.headers['Authorization'] = "Bearer #{admin_access_token}"
-          get :show, params: { id: '123abc' }
+          get :show, params: { id: 'abc' }
         end
 
         it 'returns a 404 response' do
